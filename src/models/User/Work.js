@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+const { model, Schema } = require("mongoose");
 
 const schema = new Schema({
   company_name: String,
@@ -24,4 +24,4 @@ schema.set("toJSON", {
 
 const Work = model("Work", schema);
 
-export { Work };
+module.exports = { Work };

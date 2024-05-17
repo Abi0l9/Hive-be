@@ -10,6 +10,7 @@ const schema = new Schema({
     unique: true,
     required: true,
   },
+  dp: String,
   passwordHash: String,
   dob: String,
   marital_status: String,
@@ -19,6 +20,10 @@ const schema = new Schema({
   nationality: String,
   job_preference: String,
   verificationCode: String,
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
   roles: {
     enum: ["user", "recruiter", "admin"],
     type: [String],

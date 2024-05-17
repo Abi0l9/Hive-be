@@ -11,6 +11,9 @@ const tokenExtractor = require("./utils/middlewares/tokenExtractor");
 const userExtractor = require("./utils/middlewares/userExtractor");
 const errorHandler = require("./utils/middlewares/errorHandler");
 
+//routers
+const userRouter = require("./routes/user/userRouter");
+
 const options = zwaggerOpsGetter({ PORT });
 
 const specs = swaggerJsdoc(options);
@@ -26,13 +29,16 @@ app.use(
 );
 
 app.use(requestLogger);
-app.get("/api", (_req, res) => {
+app.get("/api", async (_req, res) => {
   return res.status(200).json({ message: "Welcome to Hive." });
 });
+
+app.use("/api/auth", authRoutes);
+
 app.use(tokenExtractor);
 app.use(userExtractor);
 
-app.use("/api/auth", authRoutes);
+app.use("/api/user", userRouter);
 
 app.use(errorHandler);
 module.exports = app;

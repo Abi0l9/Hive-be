@@ -6,6 +6,8 @@ const {
   verificationCodeHandler,
 } = require("../utils/handlers/verficationCodeHandler");
 const { SECRET } = require("../utils/config");
+const sendVerificationCode = require("../utils/mailing/sendVerificationCode");
+const sendRegCongrats = require("../utils/mailing/sendRegCongrats");
 
 const registerUser = async (req, res) => {
   const body = req.body;
@@ -25,6 +27,12 @@ const registerUser = async (req, res) => {
 
     await newUser.save();
 
+    await sendVerificationCode({
+      user: body.first_name,
+      email,
+      code: verificationCode,
+    });
+
     return res.status(201).json({ message: "user successfully registered." });
   } catch (e) {
     const error = errorMsgHandler(e);
@@ -40,6 +48,10 @@ const loginUser = async (req, res) => {
     const userExists = await User.findOne({ email });
     if (!userExists) {
       return res.status(404).json({ error: "User not found." });
+    }
+
+    if (!userExists.isVerified) {
+      return res.status(403).json({ error: "Please, activate your account." });
     }
 
     const passwordHash = userExists.passwordHash;
@@ -61,4 +73,33 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+const verifyUser = async (req, res) => {
+  const body = req.body;
+  const { verificationCode, email } = body;
+
+  try {
+    const userExists = await User.findOne({ email });
+    if (!userExists) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    if (userExists.verificationCode !== verificationCode) {
+      return res.status(400).json({ error: " Verification code is invalid" });
+    }
+
+    userExists.isVerified = true;
+    await userExists.save();
+
+    await sendRegCongrats({
+      user: userExists.first_name,
+      email,
+    });
+
+    return res.status(200).json({ message: "User successfully verified." });
+  } catch (e) {
+    const error = errorMsgHandler(e);
+    return res.status(400).json({ error });
+  }
+};
+
+module.exports = { registerUser, loginUser, verifyUser };

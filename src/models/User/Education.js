@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+const { model, Schema } = require("mongoose");
 
 const schema = new Schema({
   institution_name: String,
@@ -25,4 +25,4 @@ schema.set("toJSON", {
 
 const Education = model("Education", schema);
 
-export { Education };
+module.exports = { Education };

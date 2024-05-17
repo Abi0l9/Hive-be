@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+const { model, Schema } = require("mongoose");
 
 const schema = new Schema({
   name: String,
@@ -16,4 +16,4 @@ schema.set("toJSON", {
 
 const Document = model("Document", schema);
 
-export { Document };
+module.exports = { Document };
