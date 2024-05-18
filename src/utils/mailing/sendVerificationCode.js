@@ -12,7 +12,7 @@ const sendVerificationCode = async ({ user, code, email }) => {
   });
 
   await transporter.sendMail({
-    from: `"Hive <mailtrap@feadohonline.online>"`,
+    from: `"Hive mailtrap@feadohonline.online"`,
     to: `${email}`,
     subject: "Verification Code",
     text: `${code}`,
