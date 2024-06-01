@@ -38,7 +38,7 @@ app.use("/api/auth", authRoutes);
 app.use(tokenExtractor);
 app.use(userExtractor);
 
-app.use("/api/user", userRouter);
+app.use("/api/users", userRouter);
 
 app.use(errorHandler);
 module.exports = app;

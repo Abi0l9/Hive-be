@@ -33,20 +33,28 @@ const schema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Education",
+      default: [],
     },
   ],
   works: [
     {
       type: Schema.Types.ObjectId,
       ref: "Work",
+      default: [],
     },
   ],
   documents: [
     {
       type: Schema.Types.ObjectId,
       ref: "Document",
+      default: [],
     },
   ],
+  lastMode: {
+    enum: ["user", "recruiter", "admin"],
+    type: String,
+    default: "user",
+  },
 });
 
 schema.plugin(mongooseUniqueValidator);

@@ -61,12 +61,17 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ error: "Incorrect email/password" });
     }
 
-    const payload = { id: userExists.id, email: userExists.email };
+    const payload = {
+      id: userExists.id,
+      email: userExists.email,
+    };
     const token = jwt.sign(payload, SECRET);
 
-    return res
-      .status(200)
-      .json({ message: "user logged successfully.", token });
+    return res.status(200).json({
+      message: "user logged successfully.",
+      token,
+      lastMode: userExists.lastMode,
+    });
   } catch (e) {
     const error = errorMsgHandler(e);
     return res.status(400).json({ error });

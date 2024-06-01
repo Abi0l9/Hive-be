@@ -11,6 +11,10 @@ const schema = new Schema({
     default: false,
     type: Boolean,
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 schema.set("toJSON", {

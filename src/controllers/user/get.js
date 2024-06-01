@@ -45,6 +45,7 @@ const getUserWork = async (req, res) => {
     if (!userExists) {
       return res.status(404).json({ error: "User not found." });
     }
+
     const userWork = await Work.find({ user: id });
 
     return res.status(200).json(userWork);
