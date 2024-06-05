@@ -83,7 +83,9 @@ const deleteUserDocuments = async (req, res) => {
     }
 
     await Document.findByIdAndDelete(docId);
-    userExists.document = userExists.document.filter((doc) => doc.id !== docId);
+    userExists.document = userExists.documents.filter(
+      (doc) => doc.id !== docId
+    );
     await userExists.save();
 
     return res.status(200).json({ message: "Document  deleted successfully" });

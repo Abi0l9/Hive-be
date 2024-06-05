@@ -64,6 +64,7 @@ const getUserDocs = async (req, res) => {
       return res.status(404).json({ error: "User not found." });
     }
     const userDocs = await Document.find({ user: id });
+    const docs = await Document.find({});
 
     return res.status(200).json(userDocs);
   } catch (e) {

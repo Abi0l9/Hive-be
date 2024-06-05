@@ -3,6 +3,14 @@ const { model, Schema } = require("mongoose");
 const schema = new Schema({
   name: String,
   link: String,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  isCertificate: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 schema.set("toJSON", {
