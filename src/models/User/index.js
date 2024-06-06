@@ -24,6 +24,10 @@ const schema = new Schema({
     type: Boolean,
     default: false,
   },
+  firstLogin: {
+    type: Boolean,
+    default: true,
+  },
   roles: {
     enum: ["user", "recruiter", "admin"],
     type: [String],

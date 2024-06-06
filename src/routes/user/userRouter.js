@@ -10,6 +10,7 @@ const {
   updateUserDocuments,
   updateUserEducation,
   updateUserWork,
+  switchUserMode,
 } = require("../../controllers/user/patch");
 
 const {
@@ -31,7 +32,8 @@ router
   .patch("/password", updateUserPassword)
   .patch("/educations", updateUserEducation)
   .patch("/works", updateUserWork)
-  .patch("/documents", updateUserDocuments);
+  .patch("/documents", updateUserDocuments)
+  .patch("/switch/:mode", switchUserMode);
 
 router
   .delete("/educations/:eduId", deleteUserEducation)

@@ -23,7 +23,7 @@ const deleteUserEducation = async (req, res) => {
 
     await Education.findByIdAndDelete(eduId);
     userExists.educations = userExists.educations.filter(
-      (edu) => edu.id !== eduId
+      (edu) => edu._id.toString() !== eduId
     );
 
     await userExists.save();
@@ -54,7 +54,9 @@ const deleteUserWork = async (req, res) => {
     }
 
     await Work.findByIdAndDelete(workId);
-    userExists.works = userExists.works.filter((work) => work.id !== workId);
+    userExists.works = userExists.works.filter(
+      (work) => work._id.toString() !== workId
+    );
     await userExists.save();
 
     return res
@@ -83,8 +85,8 @@ const deleteUserDocuments = async (req, res) => {
     }
 
     await Document.findByIdAndDelete(docId);
-    userExists.document = userExists.documents.filter(
-      (doc) => doc.id !== docId
+    userExists.documents = userExists.documents.filter(
+      (doc) => doc._id.toString() !== docId
     );
     await userExists.save();
 

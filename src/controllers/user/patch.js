@@ -165,10 +165,29 @@ const updateUserDocuments = async (req, res) => {
   }
 };
 
+const switchUserMode = async (req, res) => {
+  const { id } = req.user;
+  const mode = req.params.mode;
+
+  try {
+    const userExists = await User.findById(id);
+    if (!userExists) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    await User.findByIdAndUpdate(id, { lastMode: mode, firstLogin: false });
+
+    return res.status(201).json({ message: "Switched successfully" });
+  } catch (e) {
+    return res.status(400).json({ error: e.message });
+  }
+};
+
 module.exports = {
   updatePersonalInfo,
   updateUserPassword,
   updateUserEducation,
   updateUserWork,
   updateUserDocuments,
+  switchUserMode,
 };
