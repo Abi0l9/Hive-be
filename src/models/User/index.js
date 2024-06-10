@@ -59,6 +59,10 @@ const schema = new Schema({
     type: String,
     default: "user",
   },
+  company: {
+    type: Schema.Types.ObjectId,
+    ref: "Company",
+  },
 });
 
 schema.plugin(mongooseUniqueValidator);
