@@ -19,6 +19,8 @@ const {
   deleteUserWork,
 } = require("../../controllers/user/delete");
 
+const { addCompany } = require("../../controllers/company/patch");
+
 const router = require("express").Router();
 
 router
@@ -33,6 +35,7 @@ router
   .patch("/educations", updateUserEducation)
   .patch("/works", updateUserWork)
   .patch("/documents", updateUserDocuments)
+  .patch("/company", addCompany)
   .patch("/switch/:mode", switchUserMode);
 
 router

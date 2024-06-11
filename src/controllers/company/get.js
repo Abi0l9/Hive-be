@@ -22,6 +22,28 @@ const getOneCompany = async (req, res) => {
   }
 };
 
+const getUserCompany = async (req, res) => {
+  const { id } = req.user;
+
+  try {
+    const userExists = await User.findById(id);
+    if (!userExists) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    const userCompany = userExists.company;
+    const companyExists = await Company.findById(userCompany);
+
+    if (!companyExists) {
+      return res.status(404).json({ error: "Company not found." });
+    }
+
+    return res.status(200).json(companyExists);
+  } catch (e) {
+    return res.status(400).json({ error: e.message });
+  }
+};
+
 const getCompanyJobs = async (req, res) => {
   const { id } = req.user;
   const companyId = req.params.companyId;
@@ -46,4 +68,4 @@ const getCompanyJobs = async (req, res) => {
   }
 };
 
-module.exports = { getOneCompany, getCompanyJobs };
+module.exports = { getOneCompany, getCompanyJobs, getUserCompany };
