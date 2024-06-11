@@ -1,6 +1,6 @@
 const Company = require("../../models/Company");
 const Document = require("../../models/Company/Document");
-const User = require("../../models/User/index");
+const { User } = require("../../models/User");
 
 const addCompany = async (req, res) => {
   const { id } = req.user;
