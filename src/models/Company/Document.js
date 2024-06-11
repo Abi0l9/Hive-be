@@ -18,6 +18,6 @@ schema.set("toJSON", {
   },
 });
 
-const Document = model("Document", schema);
+const CompanyDocument = model("CompanyDocument", schema);
 
-module.exports = { Document };
+module.exports = { CompanyDocument };

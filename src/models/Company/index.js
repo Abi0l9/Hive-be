@@ -45,7 +45,7 @@ const schema = new Schema({
   documents: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Document",
+      ref: "CompanyDocument",
       default: [],
     },
   ],
