@@ -13,6 +13,8 @@ const errorHandler = require("./utils/middlewares/errorHandler");
 
 //routers
 const userRouter = require("./routes/user/userRouter");
+const companyRouter = require("./routes/company/router");
+const JobRouter = require("./routes/job");
 
 const options = zwaggerOpsGetter({ PORT });
 
@@ -39,6 +41,8 @@ app.use(tokenExtractor);
 app.use(userExtractor);
 
 app.use("/api/users", userRouter);
+app.use("/api/companies", companyRouter);
+app.use("/api/jobs", JobRouter);
 
 app.use(errorHandler);
 module.exports = app;

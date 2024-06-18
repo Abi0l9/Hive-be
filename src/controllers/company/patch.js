@@ -29,15 +29,16 @@ const addCompany = async (req, res) => {
 const updateCompanyInfo = async (req, res) => {
   const { id } = req.user;
   const body = req.body;
-  const companyId = req.params.companyId;
 
   try {
     const userExists = await User.findById(id);
-    const companyExists = await Company.findById(companyId);
 
     if (!userExists) {
       return res.status(404).json({ error: "User not found." });
     }
+
+    const companyId = userExists.company;
+    const companyExists = await Company.findById(companyId);
 
     if (!companyExists) {
       return res.status(404).json({ error: "Company not found." });
@@ -56,20 +57,26 @@ const updateCompanyInfo = async (req, res) => {
 const updateCompanyDocument = async (req, res) => {
   const { id } = req.user;
   const body = req.body;
-  const companyId = req.params.companyId;
-
-  body.company = companyId;
 
   try {
     const userExists = await User.findById(id);
-    const companyExists = await Company.findById(companyId);
 
     if (!userExists) {
       return res.status(404).json({ error: "User not found." });
     }
 
+    const companyId = userExists.company;
+    const companyExists = await Company.findById(companyId);
+
     if (!companyExists) {
       return res.status(404).json({ error: "Company not found." });
+    }
+
+    //add company id to body
+    body.company = companyId;
+
+    if (!body.link.includes("https://")) {
+      return res.status(404).json({ error: "Invalid link provided." });
     }
 
     const newDoc = new Document(body);

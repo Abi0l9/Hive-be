@@ -13,6 +13,7 @@ const schema = new Schema({
   preferredExperience: String,
   educationRequirements: String,
   skillsRequired: String,
+  level: String,
   applicationDeadline: Date,
   applicationInstructions: String,
   createdAt: {

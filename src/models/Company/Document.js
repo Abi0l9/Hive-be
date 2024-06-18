@@ -20,4 +20,4 @@ schema.set("toJSON", {
 
 const CompanyDocument = model("CompanyDocument", schema);
 
-module.exports = { CompanyDocument };
+module.exports = CompanyDocument;

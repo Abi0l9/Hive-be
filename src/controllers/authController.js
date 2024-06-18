@@ -107,4 +107,87 @@ const verifyUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, verifyUser };
+const sendPwdVerificationCode = async (req, res) => {
+  const body = req.body;
+  const { email } = body;
+
+  try {
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      await userExists.save();
+
+      const verificationCode = verificationCodeHandler();
+
+      userExists.forgotPwdCode = verificationCode;
+      await sendVerificationCode({
+        user: userExists.first_name,
+        email,
+        code: verificationCode,
+      });
+      await userExists.save();
+    }
+    return res.status(200).json({ message: "Verification code sent." });
+  } catch (e) {
+    const error = errorMsgHandler(e);
+    return res.status(400).json({ error });
+  }
+};
+
+const confirmVerificationCode = async (req, res) => {
+  const body = req.body;
+  const { verificationCode, email } = body;
+
+  try {
+    const userExists = await User.findOne({ email });
+    if (!userExists) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    if (userExists.forgotPwdCode !== verificationCode) {
+      return res.status(400).json({ error: " Verification code is invalid" });
+    }
+
+    userExists.isVerified = true;
+    await userExists.save();
+
+    return res.status(200).json({ message: "code verified." });
+  } catch (e) {
+    const error = errorMsgHandler(e);
+    return res.status(400).json({ error });
+  }
+};
+
+const resetUserPwd = async (req, res) => {
+  const body = req.body;
+  const { email, password } = body;
+
+  try {
+    const userExists = await User.findOne({ email });
+    if (!userExists) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    const saltRounds = 10;
+
+    const passwordHash = await bcrypt.hash(password, saltRounds);
+    userExists.passwordHash = passwordHash;
+
+    await userExists.save();
+
+    return res.status(200).json({
+      message: "Account recovered, successfully.",
+    });
+  } catch (e) {
+    const error = errorMsgHandler(e);
+    return res.status(400).json({ error });
+  }
+};
+
+module.exports = {
+  registerUser,
+  loginUser,
+  verifyUser,
+  sendPwdVerificationCode,
+  confirmVerificationCode,
+  resetUserPwd,
+};

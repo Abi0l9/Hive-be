@@ -2,10 +2,7 @@ const { model, Schema } = require("mongoose");
 
 const schema = new Schema({
   name: String,
-  email: {
-    unique: true,
-    type: String,
-  },
+  email: String,
   logo: String,
   phone: String,
   country: String,
@@ -18,7 +15,7 @@ const schema = new Schema({
   mission: String,
   industry: String,
   employees: String,
-  found: String,
+  founded: String,
   linkedin: String,
   facebook: String,
   twitter: String,

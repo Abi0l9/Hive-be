@@ -20,6 +20,10 @@ const schema = new Schema({
   nationality: String,
   job_preference: String,
   verificationCode: String,
+  forgotPwdCode: {
+    default: "",
+    type: String,
+  },
   isVerified: {
     type: Boolean,
     default: false,
