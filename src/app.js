@@ -15,6 +15,7 @@ const errorHandler = require("./utils/middlewares/errorHandler");
 const userRouter = require("./routes/user/userRouter");
 const companyRouter = require("./routes/company/router");
 const JobRouter = require("./routes/job");
+const openRoutes = require("./routes/openRoutes");
 
 const options = zwaggerOpsGetter({ PORT });
 
@@ -34,6 +35,8 @@ app.use(requestLogger);
 app.get("/api", async (_req, res) => {
   return res.status(200).json({ message: "Welcome to Hive." });
 });
+
+app.use("/api/open", openRoutes);
 
 app.use("/api/auth", authRoutes);
 
