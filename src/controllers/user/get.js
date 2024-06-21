@@ -72,9 +72,26 @@ const getUserDocs = async (req, res) => {
   }
 };
 
+const getUserJobApplications = async (req, res) => {
+  const { id } = req.user;
+  const body = req.body;
+
+  try {
+    const userExists = await User.findById(id).populate("jobs");
+    if (!userExists) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    return res.status(200).json(userExists.jobs);
+  } catch (e) {
+    return res.status(400).json({ error: e.message });
+  }
+};
+
 module.exports = {
   getOneUser,
   getUserEducation,
   getUserWork,
   getUserDocs,
+  getUserJobApplications,
 };

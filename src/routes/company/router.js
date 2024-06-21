@@ -11,7 +11,8 @@ const jobsPatches = require("../../controllers/company/job/patch");
 router
   .get("/me", gets.getUserCompany)
   .get("/me/documents", gets.getMyCompanyDocuments)
-  .get("/me/jobs", jobsGets.getMyCompanyJobs);
+  .get("/me/jobs", jobsGets.getMyCompanyJobs)
+  .get("/me/jobs/:jobId/applications", jobsGets.getMyCompanyJobs);
 
 //other companies
 router

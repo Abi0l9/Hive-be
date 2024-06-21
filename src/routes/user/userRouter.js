@@ -19,6 +19,8 @@ const {
   deleteUserWork,
 } = require("../../controllers/user/delete");
 
+const { applyForJob } = require("../../controllers/user/post");
+
 const { addCompany } = require("../../controllers/company/patch");
 
 const router = require("express").Router();
@@ -28,6 +30,8 @@ router
   .get("/education", getUserEducation)
   .get("/work", getUserWork)
   .get("/document", getUserDocs);
+
+router.post("/jobs/:jobId/apply", applyForJob);
 
 router
   .patch("/information", updatePersonalInfo)

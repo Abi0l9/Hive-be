@@ -58,6 +58,13 @@ const schema = new Schema({
       default: [],
     },
   ],
+  jobs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Job",
+      default: [],
+    },
+  ],
   lastMode: {
     enum: ["user", "recruiter", "admin"],
     type: String,
