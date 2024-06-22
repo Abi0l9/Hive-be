@@ -8,11 +8,14 @@ const jobsGets = require("../../controllers/company/job/get");
 const jobsDelete = require("../../controllers/company/job/delete");
 const jobsPatches = require("../../controllers/company/job/patch");
 
+const applicationGets = require("../../controllers/company/application/get");
+
 router
   .get("/me", gets.getUserCompany)
   .get("/me/documents", gets.getMyCompanyDocuments)
   .get("/me/jobs", jobsGets.getMyCompanyJobs)
-  .get("/me/jobs/:jobId/applications", jobsGets.getMyCompanyJobs);
+  .get("/me/jobs/:jobId/applications", jobsGets.getMyCompanyJobs)
+  .get("/me/applications", applicationGets.getMyCompanyJobApplications);
 
 //other companies
 router

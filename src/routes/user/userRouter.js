@@ -3,6 +3,7 @@ const {
   getUserEducation,
   getUserWork,
   getUserDocs,
+  getBestJobMatches,
 } = require("../../controllers/user/get");
 const {
   updatePersonalInfo,
@@ -29,7 +30,8 @@ router
   .get("", getOneUser)
   .get("/education", getUserEducation)
   .get("/work", getUserWork)
-  .get("/document", getUserDocs);
+  .get("/document", getUserDocs)
+  .get("/jobs/best_match", getBestJobMatches);
 
 router.post("/jobs/:jobId/apply", applyForJob);
 

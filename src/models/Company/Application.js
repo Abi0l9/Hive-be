@@ -13,6 +13,10 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  company: {
+    type: Schema.Types.ObjectId,
+    ref: "Company",
+  },
   job: {
     type: Schema.Types.ObjectId,
     ref: "Job",

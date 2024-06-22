@@ -32,6 +32,13 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  applications: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Application",
+      default: [],
+    },
+  ],
   jobs: [
     {
       type: Schema.Types.ObjectId,
