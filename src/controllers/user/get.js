@@ -83,7 +83,27 @@ const getUserJobApplications = async (req, res) => {
       return res.status(404).json({ error: "User not found." });
     }
 
-    return res.status(200).json(userExists.jobs);
+    const jobs = userExists.jobs;
+
+    return res.status(200).json(jobs);
+  } catch (e) {
+    return res.status(400).json({ error: e.message });
+  }
+};
+
+const getUserBookmarkedJobs = async (req, res) => {
+  const { id } = req.user;
+  const body = req.body;
+
+  try {
+    const userExists = await User.findById(id).populate("savedJobs");
+    if (!userExists) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    const jobs = userExists.savedJobs;
+
+    return res.status(200).json(jobs);
   } catch (e) {
     return res.status(400).json({ error: e.message });
   }
@@ -120,4 +140,5 @@ module.exports = {
   getUserDocs,
   getUserJobApplications,
   getBestJobMatches,
+  getUserBookmarkedJobs,
 };

@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const { Education } = require("../../models/User/Education");
 const { Work } = require("../../models/User/Work");
 const { Document } = require("../../models/User/Document");
+const Job = require("../../models/Company/Job");
+const Company = require("../../models/Company");
 
 const updatePersonalInfo = async (req, res) => {
   const { id } = req.user;
@@ -183,6 +185,39 @@ const switchUserMode = async (req, res) => {
   }
 };
 
+const bookmarkAJob = async (req, res) => {
+  const { id } = req.user;
+  const body = req.body;
+  const { jobId } = req.params;
+
+  try {
+    const userExists = await User.findById(id);
+    if (!userExists) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    const jobExists = await Job.findById(jobId);
+
+    if (!jobExists) {
+      return res.status(404).json({ error: "Job not found." });
+    }
+
+    const companyExists = await Company.findById(jobExists.company);
+
+    if (!companyExists) {
+      return res.status(404).json({ error: "Company not found." });
+    }
+
+    userExists.savedJobs = userExists.savedJobs.concat(jobId);
+
+    await userExists.save();
+
+    return res.status(200).json({ message: "Job bookmarked, successfully." });
+  } catch (e) {
+    return res.status(400).json({ error: e.message });
+  }
+};
+
 module.exports = {
   updatePersonalInfo,
   updateUserPassword,
@@ -190,4 +225,5 @@ module.exports = {
   updateUserWork,
   updateUserDocuments,
   switchUserMode,
+  bookmarkAJob,
 };

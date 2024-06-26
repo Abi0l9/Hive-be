@@ -4,6 +4,8 @@ const {
   getUserWork,
   getUserDocs,
   getBestJobMatches,
+  getUserJobApplications,
+  getUserBookmarkedJobs,
 } = require("../../controllers/user/get");
 const {
   updatePersonalInfo,
@@ -12,12 +14,14 @@ const {
   updateUserEducation,
   updateUserWork,
   switchUserMode,
+  bookmarkAJob,
 } = require("../../controllers/user/patch");
 
 const {
   deleteUserDocuments,
   deleteUserEducation,
   deleteUserWork,
+  removeABookmarkedJob,
 } = require("../../controllers/user/delete");
 
 const { applyForJob } = require("../../controllers/user/post");
@@ -31,7 +35,9 @@ router
   .get("/education", getUserEducation)
   .get("/work", getUserWork)
   .get("/document", getUserDocs)
-  .get("/jobs/best_match", getBestJobMatches);
+  .get("/jobs/best_match", getBestJobMatches)
+  .get("/me/jobs/applications", getUserJobApplications)
+  .get("/me/jobs/bookmarked", getUserBookmarkedJobs);
 
 router.post("/jobs/:jobId/apply", applyForJob);
 
@@ -42,11 +48,13 @@ router
   .patch("/works", updateUserWork)
   .patch("/documents", updateUserDocuments)
   .patch("/company", addCompany)
-  .patch("/switch/:mode", switchUserMode);
+  .patch("/switch/:mode", switchUserMode)
+  .patch("/jobs/:jobId/bookmark", bookmarkAJob);
 
 router
   .delete("/educations/:eduId", deleteUserEducation)
   .delete("/works/:workId", deleteUserWork)
-  .delete("/documents/:docId", deleteUserDocuments);
+  .delete("/documents/:docId", deleteUserDocuments)
+  .delete("/jobs/:jobId/bookmark", removeABookmarkedJob);
 
 module.exports = router;
