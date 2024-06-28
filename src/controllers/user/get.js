@@ -121,13 +121,34 @@ const getBestJobMatches = async (req, res) => {
 
     const jobs = await Job.find({});
 
+    const locationMatch = jobs.filter((job) =>
+      job.location
+        .toLowerCase()
+        .includes(userExists?.nationality?.toLowerCase())
+    );
+
     const preferencesMatch = jobs.filter(
       (job) =>
         job.employmentType.toLowerCase() ===
         userExists.job_preference.toLowerCase()
     );
 
-    return res.status(200).json(preferencesMatch);
+    if (preferencesMatch.length) {
+      const uniqueData = new Map();
+      const data = [...locationMatch, ...preferencesMatch];
+
+      data.forEach((job) => {
+        if (!uniqueData.has(job.id)) {
+          uniqueData.set(job.id, job);
+        }
+      });
+
+      const result = Array.from(uniqueData.values());
+
+      return res.status(200).json(result);
+    }
+
+    return res.status(200).json([]);
   } catch (e) {
     return res.status(400).json({ error: e.message });
   }
