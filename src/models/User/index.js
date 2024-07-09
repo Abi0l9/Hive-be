@@ -20,9 +20,17 @@ const schema = new Schema({
   nationality: String,
   job_preference: String,
   verificationCode: String,
+  forgotPwdCode: {
+    default: "",
+    type: String,
+  },
   isVerified: {
     type: Boolean,
     default: false,
+  },
+  firstLogin: {
+    type: Boolean,
+    default: true,
   },
   roles: {
     enum: ["user", "recruiter", "admin"],
@@ -50,10 +58,28 @@ const schema = new Schema({
       default: [],
     },
   ],
+  jobs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Job",
+      default: [],
+    },
+  ],
+  savedJobs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Job",
+      default: [],
+    },
+  ],
   lastMode: {
     enum: ["user", "recruiter", "admin"],
     type: String,
     default: "user",
+  },
+  company: {
+    type: Schema.Types.ObjectId,
+    ref: "Company",
   },
 });
 
