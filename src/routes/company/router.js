@@ -15,7 +15,8 @@ router
   .get("/me/documents", gets.getMyCompanyDocuments)
   .get("/me/jobs", jobsGets.getMyCompanyJobs)
   .get("/me/jobs/:jobId/applications", jobsGets.getMyCompanyJobs)
-  .get("/me/applications", applicationGets.getMyCompanyJobApplications);
+  .get("/me/applications", applicationGets.getMyCompanyJobApplications)
+  .get("/me/applications/:appId", applicationGets.getAnApplication);
 
 //other companies
 router
