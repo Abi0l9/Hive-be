@@ -7,8 +7,12 @@ const schema = new Schema({
   portfolio: String,
   status: {
     type: String,
-    default: "applied",
+    default: "pending",
   },
+  // stages: [{
+  //   type: [String],
+  //   default: ["pending"],
+  // }],
   candidate: {
     type: Schema.Types.ObjectId,
     ref: "User",

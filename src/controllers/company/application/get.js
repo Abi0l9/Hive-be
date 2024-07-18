@@ -51,6 +51,7 @@ const getAnApplication = async (req, res) => {
 
     const application = await Application.findById(appId)
       .populate("job")
+      .populate("company")
       .populate({
         path: "candidate",
         populate: [
