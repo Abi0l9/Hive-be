@@ -133,9 +133,24 @@ const getBestJobMatches = async (req, res) => {
         userExists.job_preference.toLowerCase()
     );
 
-    if (preferencesMatch.length) {
+    const skillsMatch = [];
+
+    [...preferencesMatch, ...locationMatch].forEach((job) => {
+      const jobSkills = job?.skillsRequired
+        ?.split(",")
+        ?.map((j) => j.toLowerCase());
+      const userSkills = userExists.skills?.map((sk) => sk.value);
+
+      const userHasSkills = userSkills.filter((s) => jobSkills.includes(s));
+
+      if (userHasSkills.length) {
+        skillsMatch.push(job);
+      }
+    });
+
+    if (skillsMatch.length) {
       const uniqueData = new Map();
-      const data = [...locationMatch, ...preferencesMatch];
+      const data = [...skillsMatch];
 
       data.forEach((job) => {
         if (!uniqueData.has(job.id)) {

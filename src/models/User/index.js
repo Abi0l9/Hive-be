@@ -1,6 +1,11 @@
 const { model, Schema } = require("mongoose");
 const mongooseUniqueValidator = require("mongoose-unique-validator");
 
+const SkillsSchema = new Schema({
+  name: String,
+  value: String,
+});
+
 const schema = new Schema({
   first_name: String,
   last_name: String,
@@ -24,6 +29,10 @@ const schema = new Schema({
     default: "",
     type: String,
   },
+  salary: {
+    default: "",
+    type: String,
+  },
   isVerified: {
     type: Boolean,
     default: false,
@@ -37,6 +46,12 @@ const schema = new Schema({
     type: [String],
     default: ["user"],
   },
+  skills: [
+    {
+      type: SkillsSchema,
+      default: [],
+    },
+  ],
   educations: [
     {
       type: Schema.Types.ObjectId,
