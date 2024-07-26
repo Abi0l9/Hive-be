@@ -9,6 +9,7 @@ const jobsDelete = require("../../controllers/company/job/delete");
 const jobsPatches = require("../../controllers/company/job/patch");
 
 const applicationGets = require("../../controllers/company/application/get");
+const applicationPatches = require("../../controllers/company/application/patch");
 
 router
   .get("/me", gets.getUserCompany)
@@ -28,7 +29,11 @@ router.post("/me/jobs", jobsPost.addNewJob);
 router
   .patch("/me/information", patches.updateCompanyInfo)
   .patch("/me/documents", patches.updateCompanyDocument)
-  .patch("/me/jobs/:jobId", jobsPatches.updateMyCompanyJob);
+  .patch("/me/jobs/:jobId", jobsPatches.updateMyCompanyJob)
+  .patch(
+    "/me/applications/:appId/status",
+    applicationPatches.updateAnApplicationStatus
+  );
 
 router
   .delete("/me/documents/:docId", deletes.deleteMyCompanyDocuments)
